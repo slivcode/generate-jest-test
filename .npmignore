@@ -1,0 +1,6 @@
+**/__test__/**/
+src
+*.json
+*.lock
+.*
+tmp
