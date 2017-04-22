@@ -3,9 +3,13 @@ import * as yargs from 'yargs';
 import { readdirAsync } from 'fs-extra-promise';
 import { generateJestTest } from '../generate-jest-test';
 import { resolve } from 'path';
+import { execSync, spawn } from 'child_process';
 
-let { argv } = yargs;
-
+let { argv } = yargs
+	.option('aftercmd', {
+		type: 'string',
+	})
+	.help();
 
 const createTestInRootFolder = async () => {
 	let cwd = process.cwd();
@@ -19,7 +23,10 @@ let run = async () => {
 	if (argv._.length === 0) {
 		await createTestInRootFolder();
 	} else {
-		await generateJestTest({ target: resolve(process.cwd(), ...argv._) });
+		let p = await generateJestTest({ target: resolve(process.cwd(), ...argv._) });
+		if (argv.aftercmd) {
+			spawn(argv.aftercmd, [p], { stdio: 'inherit' });
+		}
 	}
 };
 
