@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "tsc && chmod +x lib/cli/index.js",
-    "clean": "rm -r lib",
+    "clean": "rm -rf lib",
     "prepublishOnly": "npm run clean;npm run build"
   },
   "keywords": [
